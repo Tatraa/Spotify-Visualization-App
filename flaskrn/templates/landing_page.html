@@ -1,0 +1,35 @@
+{% extends "index.html" %}
+
+{% block title %} Landing Page! {% endblock %}
+
+{% block html_head %}
+<link rel="stylesheet" href="../static/style_landing_page.css">
+{% endblock %}
+
+
+{% block content %}
+    <div class="content">
+        <h3> Teraz Printuje Słownik przekazany w pythonie </h3>
+        <ul>
+        
+            {% for k,v in my_dict.items() %}                                <!--Iteracja po słowniku, przekazanym w pythonie -->
+            {% set index = 3 %}                                                 <!-- Ustawienie zmiennej -->
+                {% if v  % index == 0 %}                                        <!-- Uzycie zmiennej w Jinja2-->
+                    <li> {{k}} {{v}} -jest podzielne przez {{ index }}          <!-- Uzycie zmiennej w bloku HTML-->
+                    
+                {% else %}
+                    <li>{{k}} {{v}} {{k,v}}</li>
+                {% endif %}                         <!--WAZNE zawsze zakoncz 'petle' albo 'if' oraz 'block'-->
+
+            {% endfor %}
+        </ul>
+    </div>  
+{% endblock %}
+    
+
+
+{% block footer %}
+    <div class="footer">
+        <h2> Hello From ladning page footer</h2>
+    </div>
+{% endblock %}
