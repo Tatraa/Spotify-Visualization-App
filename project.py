@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-from matplotlib import pyplot as plt
 
 
 
@@ -37,7 +36,7 @@ class Chart:
 def main():
     type_of_charts = {"Area Chart":"area_chart", "Bar Chart":"bar_chart", "Line Chart":"line_chart","Plotly Char":"plotly_chart"}
 
-    df = pd.read_csv("projekt_solo/StudentsPerformance.csv")
+    df = pd.read_csv("csvs/StudentsPerformance.csv")
     st.title("Students Performance")
     user_choice_type_of_chart = st.radio("Choose Type Of Data", type_of_charts)
     chart = Chart(type_of_charts[user_choice_type_of_chart], df)
