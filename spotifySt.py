@@ -80,6 +80,7 @@ def search_artist(query):
         return None
     '''
 
+# TODO - make this work
 def search_albums(query):
     result = sp.search(q=query, type='albums', limit=1)
     if result['albums']['items']:
