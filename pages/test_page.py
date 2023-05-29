@@ -22,7 +22,7 @@ def home_page(data):
     # testowanie spotipy na test page'u
     container = st.container()
     selected_artist = st.selectbox('Wybierz artyste', data['artist'])
-    # selected_albums = st.selectbox('Wybierz artyste', data['albums'])
+    #selected_albums = st.selectbox('Wybierz artyste', data['albums'])
     with container:
         st.title("Spotify")
         charts.spotifyProfilePicture(selected_artist)

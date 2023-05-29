@@ -23,7 +23,7 @@ def spotifyProfilePicture(artist_title):
         if image_url:
             st.image(image_url)
         else:
-            None
+            return None
 
 
 def chart_popularity_genre(data):
