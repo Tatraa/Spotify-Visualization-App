@@ -5,6 +5,8 @@ import pandas as pd
 from spotifySt import search_track
 import charts
 
+from PIL import Image
+
 # IMPORTANT!
 st.set_page_config(layout='wide')
 
@@ -96,6 +98,7 @@ def home_page(data):
         st.title("Spotify")
         charts.spotifyPlayer(selected_title)
 
+    st.image = Image.open("test.jpg")
 
 def main():
     data = load_data("csvs/spotify_2010_2019_data.csv")
