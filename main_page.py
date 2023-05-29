@@ -1,10 +1,9 @@
 import streamlit as st
 import plotly_express as px
-import plotly as pt
 import plotly.graph_objects as go
 import pandas as pd
 import logging
-import numpy as np
+
 
 # IMPORTANT!
 st.set_page_config(layout='wide')

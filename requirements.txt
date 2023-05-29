@@ -1,5 +1,7 @@
-pandas
-streamlit
+pandas~=2.0.2
+streamlit~=1.22.0
 plotly_express
 matplotlib
-numpy
+numpy~=1.24.3
+
+plotly~=5.14.1
