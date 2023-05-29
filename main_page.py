@@ -2,7 +2,7 @@ import streamlit as st
 import plotly_express as px
 import plotly.graph_objects as go
 import pandas as pd
-from spotifySt import search_track
+from spotifySt import search_track,search_artist
 import charts
 
 # IMPORTANT!
