@@ -83,8 +83,6 @@ def spotifyPlayer(song_title):
             st.error('There is no such a song.')
 
 
-
-
 def main():
     data = load_data("csvs/spotify_2010_2019_data.csv")
     home_page(data)
