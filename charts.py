@@ -2,7 +2,7 @@ import streamlit as st
 import plotly_express as px
 import plotly.graph_objects as go
 import pandas as pd
-from spotifySt import search_track
+from spotifySt import search_track, search_artist
 from spotifySt import *
 
 
@@ -15,6 +15,15 @@ def spotifyPlayer(song_title):
             st.audio(preview_url)
         else:
             st.error('There is no such a song.')
+
+def spotifyProfilePicture(artist_title):
+    query = artist_title
+    if query:
+        image_url = search_artist(query)
+        if image_url:
+            st.image(image_url)
+        else:
+            None
 
 
 def chart_popularity_genre(data):
