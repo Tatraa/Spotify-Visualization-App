@@ -6,7 +6,7 @@ import pandas as pd
 import logging
 import numpy as np
 
-#test
+
 #IMPORTANT!
 st.set_page_config(layout='wide')
 #-----
