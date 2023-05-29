@@ -2,8 +2,7 @@ import streamlit as st
 import plotly_express as px
 import plotly.graph_objects as go
 import pandas as pd
-import logging
-
+from spotifySt import search_track
 
 # IMPORTANT!
 st.set_page_config(layout='wide')
@@ -50,25 +49,43 @@ def home_page(data):
     st.header("Bar Chart")
     st.bar_chart(chart_data)
 
-    with st.expander(label="Wykres bpm i nrgy", expanded=True):
-        tab1, tab2 = st.tabs(["📈 Chart", "🗃 Data"])
-        tab1.line_chart(chart_data)
-        tab2.dataframe(data)
-        # st.line_chart(chart_data)
-
-    col1, col2 = st.columns(2, gap="medium")
-
-    with col1:
-        with st.expander(label="left", expanded=True):
+    with st.container():
+        with st.expander(label="Wykres bpm i nrgy", expanded=True):
             tab1, tab2 = st.tabs(["📈 Chart", "🗃 Data"])
             tab1.line_chart(chart_data)
             tab2.dataframe(data)
+            # st.line_chart(chart_data)
 
-    with col2:
-        with st.expander(label="right", expanded=True):
-            tab1, tab2 = st.tabs(["📈 Chart", "🗃 Data"])
-            tab1.area_chart(chart_data)
-            tab2.dataframe(data)
+        col1, col2 = st.columns(2, gap="medium")
+
+        with col1:
+            with st.expander(label="left", expanded=True):
+                tab1, tab2 = st.tabs(["📈 Chart", "🗃 Data"])
+                tab1.line_chart(chart_data)
+                tab2.dataframe(data)
+
+        with col2:
+            with st.expander(label="right", expanded=True):
+                tab1, tab2 = st.tabs(["📈 Chart", "🗃 Data"])
+                tab1.area_chart(chart_data)
+                tab2.dataframe(data)
+
+    container = st.container()
+
+    selected_title = st.selectbox('Wybierz utwór', data['title'])
+    with container:
+        st.title("Spotify")
+        spotifyPlayer(selected_title)
+
+
+def spotifyPlayer(song_title):
+    query = song_title
+    if query:
+        preview_url = search_track(query)
+        if preview_url:
+            st.audio(preview_url)
+        else:
+            st.error('There is no such a song.')
 
 
 def main():
