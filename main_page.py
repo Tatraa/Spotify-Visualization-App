@@ -24,22 +24,6 @@ def home_page(data):
     #Testowy Wykres
     st.title("Home Page")
     chart_data = data[["bpm", "nrgy"]]
-
-    fig = px.scatter(
-        chart_data,
-        x="bpm",
-        y="nrgy",
-        size='bpm',
-        color="bpm",
-        hover_name="bpm",
-        log_x=True,
-        size_max=160,
-        title="Tescior",
-        width=1000,
-        height=500
-    )
-    st.plotly_chart(fig, theme=None)
-
     #Testowy Wykres
     fig1 = go.Figure(
         data=go.Surface(z=data[["bpm", "nrgy"]]),
@@ -49,9 +33,7 @@ def home_page(data):
             height=800,
         ))
     st.plotly_chart(fig1, theme=None)
-    st.header("Bar Chart")
-    st.bar_chart(chart_data)
-    
+
     #-------------#
     st.title("Gotowe Wykresy")
 
@@ -81,6 +63,7 @@ def home_page(data):
     # Declaring Layout
     col3, col4 = st.columns(2, gap="medium")
 
+    # A chart depicting the relationship between 'dnce' and 'year'
     with col3:
         with st.expander(label="",expanded=True):
             tab1, tab2 = st.tabs(["📈 Chart", "🗃 Data"])
@@ -88,10 +71,19 @@ def home_page(data):
                 char, chart_data_df = charts.chart_year_dnce(data)
             tab2.dataframe(chart_data_df)
 
+    # A chart depicting the relationship between 'val' and 'year'
+    with col4:
+        with st.expander(label="",expanded=True):
+            tab1, tab2 = st.tabs(["📈 Chart", "🗃 Data"])
+            with tab1:
+                char, chart_data_df = charts.chart_val_year(data)
+            tab2.dataframe(chart_data_df)
+
+
     # TODO 1) - style spotify player   2) - do batter layout
     # Spotify Snippet Player
     container = st.container()
-    selected_title = st.selectbox('Wybierz utwór', data['title'])
+    selected_title = st.selectbox('Choose Song', data['title'])
     with container:
         st.title("Spotify")
         charts.spotifyPlayer(selected_title)

@@ -16,10 +16,14 @@ def spotifyPlayer(song_title):
         else:
             st.error('There is no such a song.')
 
-def spotifyProfilePicture(artist_title):
+def spotifyProfilePicture(artist_title,custom_width=None):
     query = artist_title
     if query:
-        image_url = search_artist(query)
+        if custom_width:
+            image_url = search_artist(query,use_custom_width=custom_width)
+        else:
+            image_url = search_artist(query)
+
         if image_url:
             st.image(image_url)
         else:
@@ -89,6 +93,7 @@ def chart_genre_nrgy(data):
 
 
 def chart_year_dnce(data):
+    # A chart depicting the relationship between 'dnce' and 'year'
     df_mean_dnce = data.groupby('year')['dnce'].mean().reset_index()
     fig_year_dnce =  px.bar(data_frame=df_mean_dnce,
                             x='year',
@@ -103,8 +108,25 @@ def chart_year_dnce(data):
     )
     return st.plotly_chart(fig_year_dnce, theme=None, use_container_width=True), df_mean_dnce
 
-# # TODO:
-# # Wykres średniego natężenia dźwięku utworów w zależności od gatunku
-# fig5 = px.bar(data_frame=data, x='genre', y='dB', title='Średnie natężenie dźwięku utworów według gatunku')
-# # Wykres średniej wartości walencyjnej utworów w zależności od roku
-# fig6 = px.bar(data_frame=data, x='year', y='val', title='Średnia wartość walencyjna utworów według roku')
+def chart_val_year(data):
+    # A chart depicting the relationship between 'val' and 'year'
+    df_mean_val = abs(data.groupby('year')['val'].mean().reset_index())
+    fig_val_year = px.line(data_frame=df_mean_val,
+                          x='year',
+                          y='val',
+                          title="Chart Showing Average VAL of Songs by their Genre"
+                          )
+
+    fig_val_year.update_layout(
+        xaxis={'title': '', 'tickfont': {'size': 13},'tickangle':45},
+        yaxis={'title': 'val', 'tickfont': {'size': 17}}
+    )
+
+    return st.plotly_chart(fig_val_year,theme=None,use_container_width=True), df_mean_val
+
+
+# TODO:
+# Wymyslić jeszcze kilka innych wykresów ( innych rodzajów niz bar-chart ) takich zeby dane na nich sie dobrze prezentowały
+
+
+
