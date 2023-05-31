@@ -29,6 +29,20 @@ def spotifyProfilePicture(artist_title,custom_width=None):
         else:
             return None
 
+def spotifyAlbumPicture(album_title, custom_width=None):
+    query = album_title
+    if query:
+        if custom_width:
+            image_url = search_albums(query, use_custom_width=custom_width)
+        else:
+            image_url = search_albums(query)
+
+        if image_url:
+            st.image(image_url)
+        else:
+            return None
+
+
 
 def chart_popularity_genre(data):
     # A chart depicting the relationship between 'top genre'  and 'Popularity'

@@ -1,12 +1,10 @@
 import streamlit as st
-import spotipy
-
+import pandas as pd
 import charts
 from spotifySt import *
 
 st.set_page_config(layout='wide')
-# TODO:
-# Filtrowanie po artystach i albumach roku, dołączenie analizy danych - 31.05.2023
+
 
 class Album:
     def __init__(self, ars_name, rel_date, gens, descs, avg_rat, duration_ms, album):
@@ -22,6 +20,7 @@ class Album:
     def add_album(self, album):
         self.albums.append(album)
 
+
 @st.cache
 def load_data(path: str) -> pd.DataFrame:
     try:
@@ -30,18 +29,42 @@ def load_data(path: str) -> pd.DataFrame:
     except FileNotFoundError:
         print(f"\n[FAILED] path '{path}' doesn't exist!")
 
+
+def display_album(album):
+    with st.expander(label="# Wynik", expanded=True):
+        st.write(f"Album: {album.album}")
+        st.write(f"Artist: {album.ars_name}")
+        st.write(f"Release Date: {album.rel_date}")
+        st.write(f"Genres: {album.gens}")
+        st.write(f"Description: {album.descs}")
+        st.write(f"Average Rating: {album.avg_rat}")
+        st.write(f"Duration : {album.duration_ms / 100}")
+        image = charts.spotifyProfilePicture(album.ars_name, custom_width=300)
+        image2 = charts.spotifyAlbumPicture(album.ars_name, custom_width=300)
+        if image is not None and image2 is not None:
+            col1, col2 = st.columns([1, 3])
+            with col1:
+                st.image(image)
+            with col2:
+                st.image(image2)
+        if image is not None:
+            st.image(image)
+        if image2 is not None:
+            st.image(image2)
+        st.write("--------------")
+
+
 def run():
     data = load_data("csvs/Top5000_album_rating.csv")
     st.title("Top Albums")
 
-    container = st.container()
-    container_for_each_result = st.container()
-
-    num_albums = st.number_input("Enter the number of albums to display:", min_value=1, max_value=len(data), value=10, step=1)
+    num_albums = st.number_input("Enter the number of albums to display:", min_value=1, max_value=len(data), value=5,
+                                 step=1)
     top_albums = []
 
     for index, row in data.iterrows():
-        album = Album(row['ars_name'], row['rel_date'], row['gens'], row['descs'], row['avg_rat'], row['duration_ms'], row['album'])
+        album = Album(row['ars_name'], row['rel_date'], row['gens'], row['descs'], row['avg_rat'], row['duration_ms'],
+                      row['album'])
         album.add_album(album)
         if len(top_albums) < num_albums:
             top_albums.append(album)
@@ -51,18 +74,14 @@ def run():
                 top_albums.remove(min_rating)
                 top_albums.append(album)
 
-    for album in top_albums:
-        with container_for_each_result:
-            st.write(f"Artist: {album.ars_name}")
-            with container:
-                charts.spotifyProfilePicture(album.ars_name, custom_width=200)
+    display_albums = []
 
-            st.write(f"Album: {album.album}")
-            st.write(f"Release Date: {album.rel_date}")
-            st.write(f"Genres: {album.gens}")
-            st.write(f"Description: {album.descs}")
-            st.write(f"Average Rating: {album.avg_rat}")
-            st.write(f"Duration (ms): {album.duration_ms}")
-            st.write("--------------")
+    for album in top_albums:
+        display_albums.append(album)
+
+    with st.container():
+        for album in display_albums:
+            display_album(album)
+
 
 run()
