@@ -5,7 +5,7 @@ import streamlit as st
 '''import base64
 from requests import post, get
 import json'''
-
+ #
 # Credential'e do mojego konta
 CLIENT_ID = '6a83e7e8c4e349739f6eea5e960910a0'
 CLIENT_SECRET = '608d827dea6d471587f50cc9f9f4932b'
