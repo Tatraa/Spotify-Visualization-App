@@ -90,7 +90,7 @@ def search_artist(query):
 def search_albums(query):
     result = sp.search(q=query, type='albums', limit=1)
     if result['albums']['items']:
-        artist = result['albums']['items'][0]
-        return artist['preview_image']
+        album = result['albums']['items'][0]
+        return album['preview_image']
     else:
         return None
