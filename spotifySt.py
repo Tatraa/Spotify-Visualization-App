@@ -58,13 +58,16 @@ def search_track(query):
         return None
 
 
-def search_artist(query):
+def search_artist(query,use_custom_width=None):
     result = sp.search(q=query, type='artist', limit=1)
     if result['artists']['items']:
         artist = result['artists']['items'][0]
         if artist['images']:
             image_url = artist["images"][0]["url"]
-            st.image(image_url, caption="Artist Photo", use_column_width=True)
+            if use_custom_width:
+                st.image(image_url, caption="Artist Photo", width=use_custom_width)
+            else:
+                st.image(image_url, caption="Artist Photo", use_column_width=True)
         else:
             st.write("Artist Doesn't have profile picture")
     else:
