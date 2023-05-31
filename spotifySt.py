@@ -2,6 +2,7 @@ import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 import pandas as pd
 import streamlit as st
+
 '''import base64
 from requests import post, get
 import json'''
@@ -48,7 +49,6 @@ search_artist(token, "ACDC")
 '''
 
 
-
 def search_track(query):
     results = sp.search(q=query, type='track', limit=1)
     if results['tracks']['items']:
@@ -64,11 +64,13 @@ def search_artist(query):
         artist = result['artists']['items'][0]
         if artist['images']:
             image_url = artist["images"][0]["url"]
-            st.image(image_url, caption="Zdjęcie profilowe", width=200)
+            st.image(image_url, caption="Artist Photo", use_column_width=True)
         else:
-            st.write("ziomek nei ma zdjecia")
+            st.write("Artist Doesn't have profile picture")
     else:
-        st.write("nie ma takiego ziomka")
+        st.write("There no such a artist")
+
+
 '''
 
 def search_artist(query):
@@ -79,6 +81,7 @@ def search_artist(query):
     else:
         return None
     '''
+
 
 # TODO - make this work
 def search_albums(query):
