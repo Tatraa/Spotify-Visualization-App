@@ -21,7 +21,7 @@ class Album:
         self.albums.append(album)
 
 
-@st.cache
+@st.cache_data
 def load_data(path: str) -> pd.DataFrame:
     try:
         df = pd.read_csv(path)
