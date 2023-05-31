@@ -8,7 +8,7 @@ import json'''
 
 # Credential'e do mojego konta
 CLIENT_ID = '6a83e7e8c4e349739f6eea5e960910a0'
-CLIENT_SECRET = '608d827dea6d471587f50cc9f9f4932b'
+CLIENT_SECRET = 'd0ca847d484f4ac08cd8080a8079ddc4'
 
 client_credentials_manager = SpotifyClientCredentials(client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
