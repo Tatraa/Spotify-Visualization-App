@@ -54,6 +54,26 @@ def display_album(album, idx, total_albums):
             st.image(image2)
         st.write("--------------")
 
+def get_top_artists(limit=None):
+    results = sp.search(q='year:2020', type='artist', limit=limit)
+    artists = results['artists']['items']
+
+    top_artists = []
+    for artist in artists:
+        ars_name = artist['name']
+        genres = artist['genres']
+        popularity = artist['popularity']
+        image_url = artist['images'][0]['url'] if artist['images'] else None
+
+        top_artists.append({
+            'ars_name': ars_name,
+            'genres': genres,
+            'popularity': popularity,
+            'image_url': image_url
+        })
+    top_artists = sorted(top_artists, key=lambda x: x['popularity'], reverse=True)
+
+    return top_artists
 
 def run():
     data = load_data("csvs/Top5000_album_rating.csv")
@@ -78,8 +98,20 @@ def run():
         total_albums = len(top_albums)
         for idx, album in enumerate(top_albums):
             display_album(album, idx, total_albums)
+
     elif options_for_sidebar == "Artists":
-        # Add code for Artists option here
-        pass
+        st.title("Top Artists")
+        num_artists = st.number_input("Enter the number of artists to display:", min_value=1, max_value=50, value=5,
+                                      step=1)
+
+        top_artists = get_top_artists(limit=num_artists)
+
+        for artist in top_artists:
+            st.write(f"Artist: {artist['ars_name']}")
+            st.write(f"Genres: {artist['genres']}")
+            st.write(f"Popularity: {artist['popularity']}")
+            if artist['image_url']:
+                st.image(artist['image_url'])
+            st.write("--------------")
 
 run()
