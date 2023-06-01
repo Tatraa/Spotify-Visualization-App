@@ -133,8 +133,7 @@ def runner():
                         container_inside_col2 = st.container()
                         with container_inside_col2:
                             st.title(f" {song.artist} - {song.name}")
-                            # TODO: Pobrac jakies informacje z API spotify i wypelnic te st.write(), np. ilosc wyświetlen
-                            # TODO: Mozna tu wstawic jaki wykres (spider charta) ktory moze obrazowac podobienstwo i ilsoc piosenek
+                            # TODO: Mozna tu wstawic jaki wykres (spider charta) z danych ktore byly indeksem, 'podobnosci'
                             st.write("Description 1")
                             st.write("Description 2")
                     charts.spotifyPlayer(song.name)
