@@ -31,8 +31,8 @@ def load_data(path: str) -> pd.DataFrame:
         print(f"\n[FAILED] path '{path}' doesn't exist!")
 
 
-def display_album(album, idx):
-    with st.expander(label=f"Wynik: {idx + 1}", expanded=True):
+def display_album(album, idx, total_albums):
+    with st.expander(label=f"Wynik {total_albums - idx}:", expanded=True):
         st.write(f"Album: {album.album}")
         st.write(f"Artist: {album.ars_name}")
         st.write(f"Release Date: {album.rel_date}")
@@ -75,9 +75,9 @@ def run():
                 if album.avg_rat > min_rating.avg_rat:
                     top_albums.remove(min_rating)
                     top_albums.append(album)
-
+        total_albums = len(top_albums)
         for idx, album in enumerate(top_albums):
-            display_album(album, idx)
+            display_album(album, idx, total_albums)
     elif options_for_sidebar == "Artists":
         # Add code for Artists option here
         pass
