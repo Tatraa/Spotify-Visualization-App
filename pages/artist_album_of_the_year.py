@@ -5,7 +5,18 @@ from spotifySt import *
 
 st.set_page_config(layout='wide')
 
+
+@st.cache_data
+def load_data(path: str) -> pd.DataFrame:
+    try:
+        df = pd.read_csv(path)
+        return df
+    except FileNotFoundError:
+        print(f"\n[FAILED] path '{path}' doesn't exist!")
+
+
 options_for_sidebar = st.sidebar.selectbox("Wybierz dane do wyświetlenia", ["Albums", "Artists"])
+
 
 class Album:
     def __init__(self, ars_name, rel_date, gens, descs, avg_rat, duration_ms, album):
@@ -31,19 +42,11 @@ class AlbumCollector:
 
     def get_albums(self, reverse_input=False, number_of_albums_to_show=1):
         if len(self.albums) > 0:
-            #sortowanie po avr_rat
+            # sortowanie po avr_rat
             self.albums.sort(key=lambda x: x.avg_rat, reverse=reverse_input)
             return self.albums[:number_of_albums_to_show]
         else:
             st.write(f"There is no albums")
-
-@st.cache_data
-def load_data(path: str) -> pd.DataFrame:
-    try:
-        df = pd.read_csv(path)
-        return df
-    except FileNotFoundError:
-        print(f"\n[FAILED] path '{path}' doesn't exist!")
 
 
 def display_album(album, idx, total_albums):
@@ -69,10 +72,10 @@ def display_album(album, idx, total_albums):
             st.image(image2)
         st.write("--------------")
 
+
 def get_top_artists(limit=None):
     results = sp.search(q='year:2020', type='artist', limit=limit)
     artists = results['artists']['items']
-
     top_artists = []
     for artist in artists:
         ars_name = artist['name']
@@ -87,19 +90,21 @@ def get_top_artists(limit=None):
             'image_url': image_url
         })
     top_artists = sorted(top_artists, key=lambda x: x['popularity'], reverse=True)
-
     return top_artists
+
 
 def run():
     data = load_data("csvs/Top5000_album_rating.csv")
     if options_for_sidebar == "Albums":
         st.title("Top Albums")
-        num_albums = st.number_input("Enter the number of albums to display:", min_value=1, max_value=len(data), value=5,
+        num_albums = st.number_input("Enter the number of albums to display:", min_value=1, max_value=len(data),
+                                     value=5,
                                      step=1)
 
         album_collector = AlbumCollector()
         for index, row in data.iterrows():
-            album = Album(row['ars_name'], row['rel_date'], row['gens'], row['descs'], row['avg_rat'], row['duration_ms'],
+            album = Album(row['ars_name'], row['rel_date'], row['gens'], row['descs'], row['avg_rat'],
+                          row['duration_ms'],
                           row['album'])
             album_collector.add_album(album)
 
@@ -113,7 +118,6 @@ def run():
         st.title("Top Artists")
         num_artists = st.number_input("Enter the number of artists to display:", min_value=1, max_value=50, value=5,
                                       step=1)
-
         top_artists = get_top_artists(limit=num_artists)
 
         for artist in top_artists:
@@ -123,5 +127,6 @@ def run():
             if artist['image_url']:
                 st.image(artist['image_url'])
             st.write("--------------")
+
 
 run()
