@@ -5,6 +5,7 @@ from spotifySt import *
 
 st.set_page_config(layout='wide')
 
+options_for_sidebar = st.sidebar.selectbox("Wybierz dane do wyświetlenia", ["Albums", "Artists"])
 
 class Album:
     def __init__(self, ars_name, rel_date, gens, descs, avg_rat, duration_ms, album):
@@ -30,8 +31,8 @@ def load_data(path: str) -> pd.DataFrame:
         print(f"\n[FAILED] path '{path}' doesn't exist!")
 
 
-def display_album(album):
-    with st.expander(label="# Wynik", expanded=True):
+def display_album(album, idx):
+    with st.expander(label=f"Wynik: {idx + 1}", expanded=True):
         st.write(f"Album: {album.album}")
         st.write(f"Artist: {album.ars_name}")
         st.write(f"Release Date: {album.rel_date}")
@@ -56,32 +57,29 @@ def display_album(album):
 
 def run():
     data = load_data("csvs/Top5000_album_rating.csv")
-    st.title("Top Albums")
 
-    num_albums = st.number_input("Enter the number of albums to display:", min_value=1, max_value=len(data), value=5,
-                                 step=1)
-    top_albums = []
+    if options_for_sidebar == "Albums":
+        st.title("Top Albums")
+        num_albums = st.number_input("Enter the number of albums to display:", min_value=1, max_value=len(data), value=5,
+                                     step=1)
+        top_albums = []
 
-    for index, row in data.iterrows():
-        album = Album(row['ars_name'], row['rel_date'], row['gens'], row['descs'], row['avg_rat'], row['duration_ms'],
-                      row['album'])
-        album.add_album(album)
-        if len(top_albums) < num_albums:
-            top_albums.append(album)
-        else:
-            min_rating = min(top_albums, key=lambda x: x.avg_rat)
-            if album.avg_rat > min_rating.avg_rat:
-                top_albums.remove(min_rating)
+        for index, row in data.iterrows():
+            album = Album(row['ars_name'], row['rel_date'], row['gens'], row['descs'], row['avg_rat'], row['duration_ms'],
+                          row['album'])
+            album.add_album(album)
+            if len(top_albums) < num_albums:
                 top_albums.append(album)
+            else:
+                min_rating = min(top_albums, key=lambda x: x.avg_rat)
+                if album.avg_rat > min_rating.avg_rat:
+                    top_albums.remove(min_rating)
+                    top_albums.append(album)
 
-    display_albums = []
-
-    for album in top_albums:
-        display_albums.append(album)
-
-    with st.container():
-        for album in display_albums:
-            display_album(album)
-
+        for idx, album in enumerate(top_albums):
+            display_album(album, idx)
+    elif options_for_sidebar == "Artists":
+        # Add code for Artists option here
+        pass
 
 run()
