@@ -50,7 +50,7 @@ class AlbumCollector:
 
 
 def display_album(album, idx, total_albums):
-    with st.expander(label=f"Wynik {total_albums - idx}:", expanded=True):
+    with st.expander(label=f"Wynik {idx + 1}:", expanded=True):
         st.write(f"Album: {album.album}")
         st.write(f"Artist: {album.ars_name}")
         st.write(f"Release Date: {album.rel_date}")
@@ -119,14 +119,22 @@ def run():
         num_artists = st.number_input("Enter the number of artists to display:", min_value=1, max_value=50, value=5,
                                       step=1)
         top_artists = get_top_artists(limit=num_artists)
+        for idx, artist in enumerate(top_artists):
+            with st.expander(label=f"Wynik: {idx + 1}", expanded=True):
+                st.write(f"Artist: {artist['ars_name']}")
+                st.write(f"Genres: {artist['genres']}")
+                st.write(f"Popularity: {artist['popularity']}")
+                if artist['image_url']:
+                    st.image(artist['image_url'])
+                st.write("--------------")
 
-        for artist in top_artists:
-            st.write(f"Artist: {artist['ars_name']}")
-            st.write(f"Genres: {artist['genres']}")
-            st.write(f"Popularity: {artist['popularity']}")
-            if artist['image_url']:
-                st.image(artist['image_url'])
-            st.write("--------------")
+        # TODO:
+        # zrobić sortowanie po 'genres', by pokazywało najlepszych artystów z danej generacji
+        # coś podobnego żeby dodać do albumów
+        #
+        # dodanie po 4ry (?) charty, wymyślić je, np prezentować jakie genre są najpopularniejsze
+        #
+        # snippet jakiegoś utworu z danego albumu, może wykonalne
 
 
 run()
