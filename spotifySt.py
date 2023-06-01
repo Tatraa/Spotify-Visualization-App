@@ -37,8 +37,6 @@ def search_artist(query,use_custom_width=None):
         st.write("There no such a artist")
 
 
-
-
 def search_albums(query,use_custom_width=None):
     result = sp.search(q=query, type='album', limit=1)
     albums = result['albums']['items']
