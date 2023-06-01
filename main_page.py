@@ -36,6 +36,7 @@ def home_page(data):
 
     #-------------#
     st.title("Gotowe Wykresy")
+    #TODO: dodac nowe taby w ktorych beda inne rodzaje wykresow z tymi samymi danymi
 
     # CHART depicting the relationship between 'top genre'  and 'Popularity'
     with st.expander(label="", expanded=True):
@@ -79,8 +80,6 @@ def home_page(data):
                 char, chart_data_df = charts.chart_val_year(data)
             tab2.dataframe(chart_data_df)
 
-
-    # TODO 1) - style spotify player   2) - do batter layout
     # Spotify Snippet Player
     container = st.container()
     selected_title = st.selectbox('Choose Song', data['title'])

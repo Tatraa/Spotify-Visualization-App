@@ -50,27 +50,23 @@ class AlbumCollector:
 
 
 def display_album(album, idx, total_albums):
+    # TODO: zmienic nazwe wynik
     with st.expander(label=f"Wynik {idx + 1}:", expanded=True):
-        st.write(f"Album: {album.album}")
-        st.write(f"Artist: {album.ars_name}")
-        st.write(f"Release Date: {album.rel_date}")
-        st.write(f"Genres: {album.gens}")
-        st.write(f"Description: {album.descs}")
-        st.write(f"Average Rating: {album.avg_rat}")
-        st.write(f"Duration : {album.duration_ms / 100}")
-        image = charts.spotifyProfilePicture(album.ars_name, custom_width=300)
-        image2 = charts.spotifyAlbumPicture(album.ars_name, custom_width=300)
-        if image is not None and image2 is not None:
-            col1, col2 = st.columns([1, 3])
-            with col1:
-                st.image(image)
-            with col2:
-                st.image(image2)
-        if image is not None:
-            st.image(image)
-        if image2 is not None:
-            st.image(image2)
-        st.write("--------------")
+
+        col1, col2, col3 = st.columns([1,3,1])
+        with col1:
+           charts.spotifyProfilePicture(album.ars_name)
+
+        with col2:
+            st.subheader(f"Album: {album.album}")
+            st.write(f"Artist: {album.ars_name}")
+            st.write(f"Release Date: {album.rel_date}")
+            st.write(f"Genres: {album.gens}")
+            st.write(f"Description: {album.descs}")
+            st.write(f"Average Rating: {album.avg_rat}")
+            st.write(f"Duration : {album.duration_ms / 100}")
+        with col3:
+            charts.spotifyAlbumPicture(album.ars_name)
 
 
 def get_top_artists(limit=None):
@@ -111,6 +107,9 @@ def run():
         # reverse_input -  True od najwiekszych ocen False - od najmniejszych ocen, number_of_albums_to_show - ile albumów wyswietlac
         sorted_albums_by_avr = album_collector.get_albums(reverse_input=True, number_of_albums_to_show=num_albums)
 
+        #TODO : Sortowanie po gatunkach - wypisywanie tylko top , z danego gatunku
+        #TODO: mozliwosc wpisania nazwy artysty i wypisanie wszytskich topowych albumów tego wybranego artysty
+        #wyswietlanie rekordów
         for idx, album in enumerate(sorted_albums_by_avr):
             display_album(album, idx, num_albums)
 
@@ -127,14 +126,6 @@ def run():
                 if artist['image_url']:
                     st.image(artist['image_url'])
                 st.write("--------------")
-
-        # TODO:
-        # zrobić sortowanie po 'genres', by pokazywało najlepszych artystów z danej generacji
-        # coś podobnego żeby dodać do albumów
-        #
-        # dodanie po 4ry (?) charty, wymyślić je, np prezentować jakie genre są najpopularniejsze
-        #
-        # snippet jakiegoś utworu z danego albumu, może wykonalne
 
 
 run()
