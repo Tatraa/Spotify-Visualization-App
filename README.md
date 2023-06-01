@@ -17,35 +17,29 @@
 
 
 # main_page.py
+
 ### Importowane biblioteki:
+    streamlit - służy do tworzenia interfejsu użytkownika.
+    plotly_express - używany do tworzenia wykresów interaktywnych.
+    search_track i search_artist z modułu spotifySy  - funkcje związane z wyszukiwaniem utworów i artystów w serwisie Spotify.
+    charts - moduł zawierający funkcje do tworzenia wykresów plik [charts.py](#chartspy) .
 
-* `streamlit` - służy do tworzenia interfejsu użytkownika.
-* `plotly_express` - używany do tworzenia wykresów interaktywnych.
-* `search_track` i `search_artist` z modułu [spotifySt.py](#spotifystpy)  - funkcje związane z wyszukiwaniem utworów i artystów w serwisie Spotify.
-* `charts` - moduł zawierający funkcje do tworzenia wykresów plik [charts.py](#chartspy) .
+**_NOTE:_** st.set_page_config(layout='wide') - ustawia szeroki układ strony.
 
-> st.set_page_config(layout='wide') - ustawia szeroki układ strony.
+### Funkcje 
+    load_data(path: str)`-> pd.DataFrame - funkcja, która wczytuje dane z pliku CSV o podanej ścieżce i zwraca ramkę danych (DataFrame) za pomocą biblioteki pandas.
+    Jeśli plik nie istnieje, wyświetla komunikat o błędzie.
 
-`load_data(path: str)` -> pd.DataFrame - funkcja, która wczytuje dane z pliku CSV o podanej ścieżce i zwraca ramkę danych (DataFrame) za pomocą biblioteki pandas.
-Jeśli plik nie istnieje, wyświetla komunikat o błędzie.
-
-`home_page(data)` - funkcja reprezentująca stronę główną. Tworzy różne wykresy i interaktywne elementy na stronie, takie jak przyciski rozwijane, zakładki, kontener do odtwarzania muzyki itp.
-
+    home_page(data) - funkcja reprezentująca stronę główną. Tworzy różne wykresy i interaktywne elementy na stronie, takie jak przyciski rozwijane, zakładki, kontener do odtwarzania muzyki itp.
 # charts.py
-> Moduł służący do implementacji wykresów 
+**_NOTE:_** Moduł służący do implementacji wykresów 
 
 # spotifySt.py
-> Moduł służący do implementacji funkcji związanych z `API - Spotify`
 
-### Importowane biblioteki:
-* `spotipy` - biblioteka do interakcji z API Spotify.
-* `SpotifyClientCredentials` - klasa odpowiedzialna za uwierzytelnianie przy użyciu danych klienta Spotify.
----
 ### Funkcje 
-* `search_track(query)` - funkcja przyjmuje jako argument zapytanie (query) i zwraca adres URL do fragmentu utworu z Spotify. Wykorzystuje metodę `sp.search` z biblioteki spotipy do wyszukania utworu na podstawie zapytania.
-* `search_artist(query, use_custom_width=None)` - funkcja przyjmuje jako argument zapytanie (query) i opcjonalnie szerokość (use_custom_width). Wykorzystuje metodę sp.search z biblioteki spotipy do wyszukania artysty na podstawie zapytania. Wyświetla zdjęcie artysty, jeśli istnieje, używając biblioteki streamlit.
-* `search_albums(query, use_custom_width=None)` - Funkcja wszukuje albumy oraz wykorzystuje te same kwestie co `search_artist(query, use_custom_width=None)`
-
+    search_track(query) - funkcja przyjmuje jako argument zapytanie (query) i zwraca adres URL do fragmentu utworu z Spotify. Wykorzystuje metodę `sp.search` z biblioteki spotipy do wyszukania utworu na podstawie zapytania.
+    search_artist(query, use_custom_width=None) - funkcja przyjmuje jako argument zapytanie (query) i opcjonalnie szerokość (use_custom_width). Wykorzystuje metodę sp.search z biblioteki spotipy do wyszukania artysty na podstawie zapytania. Wyświetla zdjęcie artysty, jeśli istnieje, używając biblioteki streamlit.
+    search_albums(query, use_custom_width=None) - Funkcja wszukuje albumy oraz wykorzystuje te same kwestie co `search_artist(query, use_custom_width=None)
 # pages/similar_songs.py
 
 ### Klasa Song:
