@@ -45,18 +45,41 @@ def spotifyAlbumPicture(album_title, custom_width=None):
             return None
 
 def similar_songs_radar_chart(song_object):
-    sim_dnce = song_object.dnce
-    sim_nrgy= song_object.nrgy
-    sim_bpm = song_object.bpm
-    sim = song_object.similarity
+    data_dict = {
+        "name": [song_object.name],
+        "dnce": [song_object.dnce],
+        "nrgy": [song_object.nrgy],
+        "bpm": [song_object.bpm],
+        "genre": [song_object.genre],
+        "artist": [song_object.artist],
+        "similarity": [song_object.similarity]
+    }
 
-    data = pd.DataFrame(dict(
-        r=[sim,sim_dnce,sim_nrgy,sim_bpm],
-        theta=['Similarity', 'Danceability', 'Song Energy',
-               'Song BPM']))
-    radar_fig = px.line_polar(data, r='r', theta='theta', line_close=True)
+    data = pd.DataFrame(data_dict)
+    categories = ["dnce", "nrgy", "bpm"]
 
-    return st.plotly_chart(radar_fig, theme=None, use_container_width=True)
+    # Tworzenie Radar Chart dla każdej kategorii
+    fig = go.Figure()
+
+    for index, row in data.iterrows():
+        values = row[categories].tolist()
+        values += values[:1]
+
+        fig.add_trace(go.Scatterpolar(
+            r=values,
+            theta=categories + [categories[0]],
+            fill='toself',
+            name=row['name']
+        ))
+
+    fig.update_layout(
+        polar=dict(
+            radialaxis=dict(visible=True),
+        ),
+        height=500,
+        width=600
+    )
+    return fig
 
 
 def chart_popularity_genre(data):

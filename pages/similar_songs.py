@@ -105,15 +105,17 @@ def runner():
             # True option - return just 1 seleted by user song
             chosen_song = recommendation_system.find_similar_songs(selected_song, get_selected_song=True)
 
-            col1, col2 = st.columns([1, 3])
+            col1, col2 = st.columns([2, 3])
             with col1:
                 charts.spotifyProfilePicture(chosen_song.artist)
             with col2:
                 container_inside_col2 = st.container()
+
                 with container_inside_col2:
                     st.title(f" {chosen_song.artist} - {chosen_song.name}")
-                    st.write("Description 1")
-                    st.write("Description 2")
+                    chart = charts.similar_songs_radar_chart(chosen_song)
+                    st.plotly_chart(chart, theme=None, use_container_width=True)
+
             charts.spotifyPlayer(chosen_song.name)
 
     #Printing Similar Songs
@@ -125,7 +127,7 @@ def runner():
             # Printing Similar songs using API
             for song in similar_songs:
                 with st.expander(label=f"Similarity Indicator - {song.similarity}", expanded=True):
-                    col1, col2 = st.columns([1, 3])
+                    col1, col2 = st.columns([2, 3])
 
                     with col1:
                         charts.spotifyProfilePicture(song.artist)
@@ -133,10 +135,9 @@ def runner():
                         container_inside_col2 = st.container()
                         with container_inside_col2:
                             st.title(f" {song.artist} - {song.name}")
-                            # TODO: Mozna tu wstawic jaki wykres (spider charta) z danych ktore byly indeksem, 'podobnosci'
-                            #st.write("Description 1")
-                            #st.write("Description 2")
-                            charts.similar_songs_radar_chart(song)
+                            chart = charts.similar_songs_radar_chart(song)
+                            st.plotly_chart(chart,theme=None,use_container_width=True)
+
                     charts.spotifyPlayer(song.name)
 
 
