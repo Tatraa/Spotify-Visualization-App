@@ -36,7 +36,6 @@ def home_page(data):
 
     #-------------#
     st.title("Gotowe Wykresy")
-    #TODO: dodac nowe taby w ktorych beda inne rodzaje wykresow z tymi samymi danymi
 
     # CHART depicting the relationship between 'top genre'  and 'Popularity'
     with st.expander(label="", expanded=True):
@@ -48,18 +47,30 @@ def home_page(data):
     # A chart depicting the relationship between 'Year'  and 'BPM'
     with col1:
         with st.expander(label="", expanded=True):
-            tab1, tab2 = st.tabs(["📈 Chart", "🗃 Data"])
+            tab1, tab2, tab3, tab4, tab5 = st.tabs(["📈 Bar Chart", "📈 Line Chart", "📈 Area Chart", "📈 Scatter Chart","🗃 Data",])
             with tab1:
                 chart, chart_data_df = charts.chart_bpm_year(data)
-            tab2.dataframe(chart_data_df)
+            with tab2:
+                chart, chart_data_df = charts.chart_bpm_year(data,type_of_chart="line")
+            with tab3:
+                charts.chart_bpm_year(data,type_of_chart="area")
+            with tab4:
+                chart, chart_data_df = charts.chart_bpm_year(data,type_of_chart="scatter")
+            tab5.dataframe(chart_data_df)
 
     # A chart depicting the relationship between 'top genre' and 'energy'
     with col2:
         with st.expander(label="", expanded=True):
-            tab1, tab2 = st.tabs(["📈 Chart", "🗃 Data"])
+            tab1, tab2, tab3, tab4, tab5 = st.tabs(["📈 Bar Chart", "📈 Line Chart", "📈 Area Chart", "📈 Scatter Chart","🗃 Data",])
             with tab1:
-                char, chart_data_df = charts.chart_genre_nrgy(data)
-            tab2.dataframe(chart_data_df)
+                chart, chart_data_df = charts.chart_genre_nrgy(data)
+            with tab2:
+                chart, chart_data_df = charts.chart_genre_nrgy(data, type_of_chart="line")
+            with tab3:
+                charts.chart_genre_nrgy(data, type_of_chart="area")
+            with tab4:
+                chart, chart_data_df = charts.chart_genre_nrgy(data, type_of_chart="scatter")
+            tab5.dataframe(chart_data_df)
 
     # Declaring Layout
     col3, col4 = st.columns(2, gap="medium")
@@ -67,25 +78,29 @@ def home_page(data):
     # A chart depicting the relationship between 'dnce' and 'year'
     with col3:
         with st.expander(label="",expanded=True):
-            tab1, tab2 = st.tabs(["📈 Chart", "🗃 Data"])
+            tab1, tab2, tab3, tab4, tab5 = st.tabs(["📈 Bar Chart", "📈 Line Chart", "📈 Area Chart", "📈 Scatter Chart", "🗃 Data", ])
             with tab1:
-                char, chart_data_df = charts.chart_year_dnce(data)
-            tab2.dataframe(chart_data_df)
+                chart, chart_data_df = charts.chart_year_dnce(data)
+            with tab2:
+                chart, chart_data_df = charts.chart_year_dnce(data, type_of_chart="line")
+            with tab3:
+                charts.chart_year_dnce(data, type_of_chart="area")
+            with tab4:
+                chart, chart_data_df = charts.chart_year_dnce(data, type_of_chart="scatter")
+            tab5.dataframe(chart_data_df)
 
     # A chart depicting the relationship between 'val' and 'year'
     with col4:
         with st.expander(label="",expanded=True):
-            tab1, tab2 = st.tabs(["📈 Chart", "🗃 Data"])
+            tab1, tab2, tab3, tab4 = st.tabs(["📈 Line Chart", "📈 Area Chart", "📈 Scatter Chart", "🗃 Data", ])
             with tab1:
-                char, chart_data_df = charts.chart_val_year(data)
-            tab2.dataframe(chart_data_df)
+                chart, chart_data_df = charts.chart_val_year(data)
+            with tab2:
+                charts.chart_val_year(data, type_of_chart="area")
+            with tab3:
+                chart, chart_data_df = charts.chart_val_year(data, type_of_chart="scatter")
+            tab4.dataframe(chart_data_df)
 
-    # Spotify Snippet Player
-    container = st.container()
-    selected_title = st.selectbox('Choose Song', data['title'])
-    with container:
-        st.title("Spotify")
-        charts.spotifyPlayer(selected_title)
 
 def main():
     data = load_data("csvs/spotify_2010_2019_data.csv")
