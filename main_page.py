@@ -36,7 +36,6 @@ def home_page(data):
 
     #-------------#
     st.title("Gotowe Wykresy")
-    #TODO: dodac nowe taby w ktorych beda inne rodzaje wykresow z tymi samymi danymi
 
     # CHART depicting the relationship between 'top genre'  and 'Popularity'
     with st.expander(label="", expanded=True):
