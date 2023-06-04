@@ -5,6 +5,7 @@ import pandas as pd
 from spotifySt import search_track, search_artist
 from spotifySt import *
 
+
 TYPES_OF_ST_CHARTS = ['line','bar','area','scatter','map']
 
 def spotifyPlayer(song_title):
@@ -42,6 +43,20 @@ def spotifyAlbumPicture(album_title, custom_width=None):
             st.image(image_url)
         else:
             return None
+
+def similar_songs_radar_chart(song_object):
+    sim_dnce = song_object.dnce
+    sim_nrgy= song_object.nrgy
+    sim_bpm = song_object.bpm
+    sim = song_object.similarity
+
+    data = pd.DataFrame(dict(
+        r=[sim,sim_dnce,sim_nrgy,sim_bpm],
+        theta=['Similarity', 'Danceability', 'Song Energy',
+               'Song BPM']))
+    radar_fig = px.line_polar(data, r='r', theta='theta', line_close=True)
+
+    return st.plotly_chart(radar_fig, theme=None, use_container_width=True)
 
 
 def chart_popularity_genre(data):

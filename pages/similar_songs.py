@@ -134,8 +134,9 @@ def runner():
                         with container_inside_col2:
                             st.title(f" {song.artist} - {song.name}")
                             # TODO: Mozna tu wstawic jaki wykres (spider charta) z danych ktore byly indeksem, 'podobnosci'
-                            st.write("Description 1")
-                            st.write("Description 2")
+                            #st.write("Description 1")
+                            #st.write("Description 2")
+                            charts.similar_songs_radar_chart(song)
                     charts.spotifyPlayer(song.name)
 
 
