@@ -4,7 +4,6 @@ import plotly.graph_objects as go
 import pandas as pd
 from spotifySt import search_track, search_artist
 from spotifySt import *
-import altair
 
 TYPES_OF_ST_CHARTS = ['line','bar','area','scatter','map']
 
