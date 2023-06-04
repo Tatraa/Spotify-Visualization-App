@@ -5,6 +5,7 @@ import pandas as pd
 from spotifySt import search_track, search_artist
 from spotifySt import *
 
+
 TYPES_OF_ST_CHARTS = ['line','bar','area','scatter','map']
 
 def spotifyPlayer(song_title):
@@ -42,6 +43,43 @@ def spotifyAlbumPicture(album_title, custom_width=None):
             st.image(image_url)
         else:
             return None
+
+def similar_songs_radar_chart(song_object):
+    data_dict = {
+        "name": [song_object.name],
+        "dnce": [song_object.dnce],
+        "nrgy": [song_object.nrgy],
+        "bpm": [song_object.bpm],
+        "genre": [song_object.genre],
+        "artist": [song_object.artist],
+        "similarity": [song_object.similarity]
+    }
+
+    data = pd.DataFrame(data_dict)
+    categories = ["dnce", "nrgy", "bpm"]
+
+    # Tworzenie Radar Chart dla każdej kategorii
+    fig = go.Figure()
+
+    for index, row in data.iterrows():
+        values = row[categories].tolist()
+        values += values[:1]
+
+        fig.add_trace(go.Scatterpolar(
+            r=values,
+            theta=categories + [categories[0]],
+            fill='toself',
+            name=row['name']
+        ))
+
+    fig.update_layout(
+        polar=dict(
+            radialaxis=dict(visible=True),
+        ),
+        height=500,
+        width=600
+    )
+    return fig
 
 
 def chart_popularity_genre(data):
