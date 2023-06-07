@@ -47,7 +47,7 @@ def home_page(data):
     # A chart depicting the relationship between 'Year'  and 'BPM'
     with col1:
         with st.expander(label="", expanded=True):
-<<<<<<< HEAD
+
             tab1, tab2, tab3, tab4, tab5 = st.tabs(["📈 Bar Chart", "📈 Line Chart", "📈 Area Chart", "📈 Scatter Chart","🗃 Data",])
             with tab1:
                 chart, chart_data_df = charts.chart_bpm_year(data)
