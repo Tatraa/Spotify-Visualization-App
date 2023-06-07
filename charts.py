@@ -18,11 +18,12 @@ def spotifyPlayer(song_title):
         else:
             st.error('There is no such a song.')
 
-def spotifyProfilePicture(artist_title,custom_width=None):
+
+def spotifyProfilePicture(artist_title, custom_width=None):
     query = artist_title
     if query:
         if custom_width:
-            image_url = search_artist(query,use_custom_width=custom_width)
+            image_url = search_artist(query, use_custom_width=custom_width)
         else:
             image_url = search_artist(query)
 
@@ -30,6 +31,7 @@ def spotifyProfilePicture(artist_title,custom_width=None):
             st.image(image_url)
         else:
             return None
+
 
 def spotifyAlbumPicture(album_title, custom_width=None):
     query = album_title
@@ -80,7 +82,6 @@ def similar_songs_radar_chart(song_object):
         width=600
     )
     return fig
-
 
 def chart_popularity_genre(data):
     # A chart depicting the relationship between 'top genre'  and 'Popularity'
@@ -201,6 +202,7 @@ def chart_genre_nrgy(data,type_of_chart="bar"):
 def chart_year_dnce(data,type_of_chart="bar"):
     # A chart depicting the relationship between 'dnce' and 'year'
     df_mean_dnce = data.groupby('year')['dnce'].mean().reset_index()
+
     fig_year_dnce = None
 
     if type_of_chart in TYPES_OF_ST_CHARTS:
@@ -235,11 +237,13 @@ def chart_year_dnce(data,type_of_chart="bar"):
                                   color='year',
                                   log_y=True)
 
+
     fig_year_dnce.update_layout(
         xaxis={'title': '', 'tickfont': {'size': 13}},
         yaxis={'title': 'DANCEBILITY', 'tickfont': {'size': 17}}
     )
     return st.plotly_chart(fig_year_dnce, theme=None, use_container_width=True), df_mean_dnce
+
 
 def chart_val_year(data,type_of_chart="line"):
     # A chart depicting the relationship between 'val' and 'year'
@@ -270,16 +274,13 @@ def chart_val_year(data,type_of_chart="line"):
                                   color='val',
                                   log_y=True)
 
+
     fig_val_year.update_layout(
-        xaxis={'title': '', 'tickfont': {'size': 13},'tickangle':45},
+        xaxis={'title': '', 'tickfont': {'size': 13}, 'tickangle': 45},
         yaxis={'title': 'val', 'tickfont': {'size': 17}}
     )
 
-    return st.plotly_chart(fig_val_year,theme=None,use_container_width=True), df_mean_val
-
+    return st.plotly_chart(fig_val_year, theme=None, use_container_width=True), df_mean_val
 
 # TODO:
 # Wymyslić jeszcze kilka innych wykresów ( innych rodzajów niz bar-chart ) takich zeby dane na nich sie dobrze prezentowały
-
-
-
