@@ -50,12 +50,11 @@ class AlbumCollector:
 
 
 def display_album(album, idx, total_albums):
-    # TODO: zmienic nazwe wynik
-    with st.expander(label=f"Wynik {idx + 1}:", expanded=True):
+    with st.expander(label=f"Top {idx + 1}:", expanded=True):
 
-        col1, col2, col3 = st.columns([1,3,1])
+        col1, col2, col3 = st.columns([1, 3, 1])
         with col1:
-           charts.spotifyProfilePicture(album.ars_name)
+            charts.spotifyProfilePicture(album.ars_name)
 
         with col2:
             st.subheader(f"Album: {album.album}")
@@ -68,9 +67,17 @@ def display_album(album, idx, total_albums):
         with col3:
             charts.spotifyAlbumPicture(album.ars_name)
 
+def get_available_genres():
+    genres = sp.recommendation_genre_seeds()['genres']
+    return genres
 
-def get_top_artists(limit=None):
-    results = sp.search(q='year:2020', type='artist', limit=limit)
+def get_top_artists(limit=None, genre=None):
+    if genre:
+        query = f"year:2022 genre:{genre}"
+    else:
+        query = "year:2022"
+
+    results = sp.search(q=query, type='artist', limit=limit)
     artists = results['artists']['items']
     top_artists = []
     for artist in artists:
@@ -108,6 +115,7 @@ def run():
         sorted_albums_by_avr = album_collector.get_albums(reverse_input=True, number_of_albums_to_show=num_albums)
 
         #TODO : Sortowanie po gatunkach - wypisywanie tylko top , z danego gatunku
+        # DONE (?)
         #TODO: mozliwosc wpisania nazwy artysty i wypisanie wszytskich topowych albumów tego wybranego artysty
         #wyswietlanie rekordów
         for idx, album in enumerate(sorted_albums_by_avr):
@@ -117,9 +125,15 @@ def run():
         st.title("Top Artists")
         num_artists = st.number_input("Enter the number of artists to display:", min_value=1, max_value=50, value=5,
                                       step=1)
-        top_artists = get_top_artists(limit=num_artists)
+
+        available_genres = get_available_genres()
+
+        genre_input = st.selectbox("Select a genre:", available_genres)
+
+        top_artists = get_top_artists(limit=num_artists, genre=genre_input)
+
         for idx, artist in enumerate(top_artists):
-            with st.expander(label=f"Wynik: {idx + 1}", expanded=True):
+            with st.expander(label=f"Top: {idx + 1}", expanded=True):
                 st.write(f"Artist: {artist['ars_name']}")
                 st.write(f"Genres: {artist['genres']}")
                 st.write(f"Popularity: {artist['popularity']}")
