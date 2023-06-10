@@ -7,4 +7,8 @@ plotly~=5.14.1
 pydub~=0.25.1
 spotipy~=2.23.0
 Pillow~=9.5.0
-bs4
+bs4~=0.0.1
+
+pycountry~=22.3.5
+requests~=2.31.0
+beautifulsoup4~=4.12.2
