@@ -4,6 +4,7 @@ import plotly.graph_objects as go
 import pandas as pd
 from spotifySt import search_track,search_artist
 import charts
+from PIL import Image
 
 # IMPORTANT!
 st.set_page_config(layout='wide')
@@ -105,6 +106,8 @@ def home_page(data):
 
 
 def main():
+    image = Image.open("spotifyLogo.png")
+    st.sidebar.image(image, width=50)
     data = load_data("csvs/spotify_2010_2019_data.csv")
     home_page(data)
 

@@ -7,3 +7,4 @@ plotly~=5.14.1
 pydub~=0.25.1
 spotipy~=2.23.0
 Pillow~=9.5.0
+bs4
