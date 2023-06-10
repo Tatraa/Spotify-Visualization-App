@@ -282,5 +282,26 @@ def chart_val_year(data,type_of_chart="line"):
 
     return st.plotly_chart(fig_val_year, theme=None, use_container_width=True), df_mean_val
 
+
+def most_streamed_artists(data):
+
+    fig = px.bar(data, x='artist', y='lead Streams',color='artist', title='Lead Stream vs Artysta')
+
+    fig.update_layout(
+        xaxis={'title': '', 'tickfont': {'size': 13}, 'tickangle': 45},
+        yaxis={'title': 'Streams', 'tickfont': {'size': 17}}
+    )
+    return st.plotly_chart(fig)
+def most_streamed_money_maker(data):
+
+    data["lead Streams"] = data["lead Streams"] * 0.0032
+    fig = px.bar(data, x='artist', y='lead Streams',color='artist', title='Lead Stream vs Artysta')
+
+    fig.update_layout(
+        xaxis={'title': '', 'tickfont': {'size': 13}, 'tickangle': 45},
+        yaxis={'title': 'Money made - USD', 'tickfont': {'size': 17}}
+    )
+    return st.plotly_chart(fig)
+
 # TODO:
 # Wymyslić jeszcze kilka innych wykresów ( innych rodzajów niz bar-chart ) takich zeby dane na nich sie dobrze prezentowały
