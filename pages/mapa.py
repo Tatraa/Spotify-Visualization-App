@@ -13,6 +13,7 @@ def load_data(path:str) -> pd.DataFrame:
         df = pd.read_csv(path)
         return df
     except FileNotFoundError:
+        st.write("Nie ma pliku CSV potrzbnego do mapy nalezy wypakowac - nazwac charts.csv")
         print(f"\n[FAILED] path '{path}' doesn't exist!")
 
 @st.cache_data
