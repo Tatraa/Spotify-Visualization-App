@@ -5,8 +5,6 @@ import streamlit as st
 
 # Wczytaj dane z pliku CSV
 
-
-
 @st.cache_data
 def load_data(path:str) -> pd.DataFrame:
     try:
