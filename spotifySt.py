@@ -7,6 +7,7 @@ from spotipy import SpotifyClientCredentials
 # Credentials for your Spotify account
 CLIENT_ID = '6a83e7e8c4e349739f6eea5e960910a0'
 CLIENT_SECRET = '74f51cbd69274031a5d504d670b5bec3'
+
 AUTH_URL = 'https://accounts.spotify.com/api/token'
 API_BASE_URL = 'https://api.spotify.com/v1/'
 

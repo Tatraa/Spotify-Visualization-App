@@ -6,7 +6,7 @@ from spotifySt import search_track, search_artist
 from spotifySt import *
 
 
-TYPES_OF_ST_CHARTS = ['line','bar','area','scatter','map']
+TYPES_OF_ST_CHARTS = ['line','bar','area','scatter','map','pie']
 
 def spotifyPlayer(song_title):
     # Spotify Snippet Player
@@ -285,6 +285,7 @@ def chart_val_year(data,type_of_chart="line"):
 
 def most_streamed_artists(data):
 
+    # data = data.groupby('artist')['lead Streams'].reset_index()
     fig = px.bar(data, x='artist', y='lead Streams',color='artist', title='Lead Stream vs Artysta')
 
     fig.update_layout(
@@ -292,14 +293,76 @@ def most_streamed_artists(data):
         yaxis={'title': 'Streams', 'tickfont': {'size': 17}}
     )
     return st.plotly_chart(fig)
-def most_streamed_money_maker(data):
+def most_streamed_money_maker(data, type_of_chart):
+
+    if type_of_chart in TYPES_OF_ST_CHARTS:
+        pass
+    else:
+        return st.write(f"No such a chart like {type_of_chart}")
 
     data["lead Streams"] = data["lead Streams"] * 0.0032
-    fig = px.bar(data, x='artist', y='lead Streams',color='artist', title='Lead Stream vs Artysta')
+    if type_of_chart == "bar":
+        fig = px.bar(data, x='artist', y='lead Streams',color='artist', title='Money made by artist')
+
+        fig.update_layout(
+            xaxis={'title': '', 'tickfont': {'size': 13}, 'tickangle': 45},
+            yaxis={'title': 'Money made - USD', 'tickfont': {'size': 17}}
+        )
+        return st.plotly_chart(fig)
+
+    elif type_of_chart == "pie":
+        fig = px.pie(data, names="artist", values="lead Streams", color='artist', title='Money made by Top 25 artist')
+        # x='artist'y='feat Streams',
+
+        fig.update_layout(
+            xaxis={'title': '', 'tickfont': {'size': 13}, 'tickangle': 45},
+            yaxis={'title': 'Streams', 'tickfont': {'size': 17}}
+        )
+        return st.plotly_chart(fig)
+
+def feats_most_streamed_artists(data):
+
+    fig = px.bar(data, x='artist', y='feat Streams',color='artist', title='Feat Stream vs Artysta')
 
     fig.update_layout(
         xaxis={'title': '', 'tickfont': {'size': 13}, 'tickangle': 45},
-        yaxis={'title': 'Money made - USD', 'tickfont': {'size': 17}}
+        yaxis={'title': 'Streams', 'tickfont': {'size': 17}}
+    )
+    return st.plotly_chart(fig)
+
+def songs_over_1B(data):
+    fig = px.bar(data, x='artist', y='songs over 1B', color='artist', title='Songs with over 1 Bilion streams')
+
+    fig.update_layout(
+        xaxis={'title': '', 'tickfont': {'size': 13}, 'tickangle': 45},
+        yaxis={'title': 'Songs over 1B', 'tickfont': {'size': 17}}
+    )
+    return st.plotly_chart(fig)
+
+def songs_over_100m(data):
+    fig = px.bar(data, x='artist', y='songs over 100m', color='artist', title='Songs with over 100 Million streams')
+
+    fig.update_layout(
+        xaxis={'title': '', 'tickfont': {'size': 13}, 'tickangle': 45},
+        yaxis={'title': 'Songs over 100M', 'tickfont': {'size': 17}}
+    )
+    return st.plotly_chart(fig)
+
+def songs_over_10m(data):
+    fig = px.bar(data, x='artist', y='songs over 10m', color='artist', title='Songs with over 10 Million streams')
+
+    fig.update_layout(
+        xaxis={'title': '', 'tickfont': {'size': 13}, 'tickangle': 45},
+        yaxis={'title': 'Songs over 10M', 'tickfont': {'size': 17}}
+    )
+    return st.plotly_chart(fig)
+
+def tracks_recorded(data):
+    fig = px.bar(data, x='artist', y='tracks recorded', color='artist', title='Total tracks recorded by artist')
+
+    fig.update_layout(
+        xaxis={'title': '', 'tickfont': {'size': 13}, 'tickangle': 45},
+        yaxis={'title': 'Total tracks', 'tickfont': {'size': 17}}
     )
     return st.plotly_chart(fig)
 
