@@ -118,7 +118,7 @@ def run():
 
     elif options_for_sidebar == "Artists":
         st.title("Top Artists")
-        num_artists = st.number_input("Enter the number of artists to display:", min_value=1, max_value=50, value=5,
+        num_artists = st.number_input("Enter the number of artists to display:", min_value=1, max_value=50, value=10,
                                       step=1)
 
         available_genres = get_available_genres()
@@ -129,16 +129,31 @@ def run():
 
         if top_artists == None:
             return st.header("There is no such an artist ")
+        # Liczba kolumn expanderów w każdym wierszu
+        num_cols = 2
+        # Obliczenie liczby wierszy
+        num_rows = (len(top_artists) + num_cols - 1) // num_cols
 
-        for idx, artist in enumerate(top_artists):
-            with st.expander(label=f"Top: {idx + 1}", expanded=True):
-                col1, col2 = st.columns([2, 7])
-                with col1:
-                    if artist['image_url']:
-                        st.image(artist['image_url'])
-                with col2:
-                    st.header(f"Artist: {artist['ars_name']}")
-                    st.write(f"Genres: {artist['genres']}")
-                    st.write(f"Popularity: {artist['popularity']}")
+        for row in range(num_rows):
+            expander_row = st.columns(num_cols, gap="medium")
+
+            for col in range(num_cols):
+                idx = row * num_cols + col
+                if idx < len(top_artists):
+                    artist = top_artists[idx]
+                    with expander_row[col]:
+                        with st.expander(label=f"Top: {idx + 1}", expanded=True):
+                            col1, col2 = st.columns([2, 7])
+
+                            with col1:
+                                if artist['image_url']:
+                                    st.image(artist['image_url'])
+
+                            with col2:
+                                artist_genres = artist['genres']
+                                genres_string = ", ".join(artist_genres)
+                                st.header(f"Artist: {artist['ars_name']}")
+                                st.write(f"Genres: {genres_string}")
+                                st.write(f"Popularity: {artist['popularity']}")
 
 run()
