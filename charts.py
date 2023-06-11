@@ -261,7 +261,7 @@ def chart_val_year(data,type_of_chart="line"):
         fig_val_year = px.line(data_frame=df_mean_val,
                                x='year',
                                y='val',
-                               title="Chart Showing Average Danceability of Songs by Their year",
+                               title="Chart Showing Average Positiveness of Songs by Their year",
                                )
 
     elif type_of_chart == "area":
@@ -271,7 +271,7 @@ def chart_val_year(data,type_of_chart="line"):
         fig_val_year = px.scatter(data_frame=df_mean_val,
                                   x='year',
                                   y='val',
-                                  title="Chart Showing Average Danceability of Songs by Their year",
+                                  title="Chart Showing Average Positiveness of Songs by Their year",
                                   size='val',
                                   color='val',
                                   log_y=True)
