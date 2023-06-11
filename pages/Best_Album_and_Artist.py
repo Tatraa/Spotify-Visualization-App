@@ -132,7 +132,7 @@ def run():
 
         for idx, artist in enumerate(top_artists):
             with st.expander(label=f"Top: {idx + 1}", expanded=True):
-                col1, col2 = st.columns([2, 3])
+                col1, col2 = st.columns([2, 7])
                 with col1:
                     if artist['image_url']:
                         st.image(artist['image_url'])
