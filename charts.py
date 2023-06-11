@@ -16,7 +16,7 @@ def spotifyPlayer(song_title):
         if preview_url:
             st.audio(preview_url)
         else:
-            st.error('There is no such a song.')
+            st.write("Player for this song is not available")
 
 
 def spotifyProfilePicture(artist_title, custom_width=None):
