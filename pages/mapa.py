@@ -67,7 +67,8 @@ def load_map(df):
 def website_layout():
     st.header("Mapa Pokazująca ilość streamów - wyświetlen w zależnosci od kraju")
     df = load_data('csvs/charts.csv')
-    #df = df[0:200000]
+    #Zalecana ilsoc na poczatek 20k -> pozniej zwiekszenie do 200k -> pozniej caly df
+    df = df[0:20000]
     with st.expander(label='Średnia liczba streamów na kraj',expanded=True):
         load_map(df)
 
