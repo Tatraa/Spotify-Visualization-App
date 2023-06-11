@@ -302,7 +302,7 @@ def most_streamed_money_maker(data, type_of_chart):
     else:
         return st.write(f"No such a chart like {type_of_chart}")
 
-    data["lead Streams"] = data["lead Streams"] * 0.0032
+    data["lead Streams"] = data["lead Streams"] * 0.0033
     if type_of_chart == "bar":
         fig = px.bar(data, x='artist', y='lead Streams',color='artist', title='Money made by artist')
 
