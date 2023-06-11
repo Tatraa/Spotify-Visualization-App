@@ -6,7 +6,6 @@ import spotipy
 
 st.set_page_config(layout='wide')
 
-
 @st.cache_data
 def load_data(path: str) -> pd.DataFrame:
     try:
@@ -15,9 +14,7 @@ def load_data(path: str) -> pd.DataFrame:
     except FileNotFoundError:
         print(f"\n[FAILED] path '{path}' doesn't exist!")
 
-
 options_for_sidebar = st.sidebar.selectbox("Wybierz dane do wyświetlenia", ["Albums", "Artists"])
-
 
 class Album:
     def __init__(self, ars_name, rel_date, gens, descs, avg_rat, duration_ms, album):

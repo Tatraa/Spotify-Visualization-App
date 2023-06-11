@@ -57,7 +57,7 @@ class MusicRecommendationSystem:
 
             return similar_songs
 
-    # Metryka Euklidesowa XD , nie sadzilem ze kiedy tego uzyje
+    # Metryka Euklidesowa
     def calculate_similarity(self, song1, song2):
         self.distance = ((song1.dnce - song2.dnce) ** 2 +
                          (song1.nrgy - song2.nrgy) ** 2 +
