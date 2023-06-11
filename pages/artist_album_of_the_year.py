@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import charts
 from spotifySt import *
+import spotipy
 
 st.set_page_config(layout='wide')
 
@@ -67,35 +68,6 @@ def display_album(album, idx, total_albums):
         with col3:
             charts.spotifyAlbumPicture(album.ars_name)
 
-def get_available_genres():
-    genres = sp.recommendation_genre_seeds()['genres']
-    return genres
-
-def get_top_artists(limit=None, genre=None):
-    if genre:
-        query = f"year:2022 genre:{genre}"
-    else:
-        query = "year:2022"
-
-    results = sp.search(q=query, type='artist', limit=limit)
-    artists = results['artists']['items']
-    top_artists = []
-    for artist in artists:
-        ars_name = artist['name']
-        genres = artist['genres']
-        popularity = artist['popularity']
-        image_url = artist['images'][0]['url'] if artist['images'] else None
-
-        top_artists.append({
-            'ars_name': ars_name,
-            'genres': genres,
-            'popularity': popularity,
-            'image_url': image_url
-        })
-    top_artists = sorted(top_artists, key=lambda x: x['popularity'], reverse=True)
-    return top_artists
-
-
 def run():
     data = load_data("csvs/Top5000_album_rating.csv")
     if options_for_sidebar == "Albums":
@@ -114,9 +86,6 @@ def run():
         # reverse_input -  True od najwiekszych ocen False - od najmniejszych ocen, number_of_albums_to_show - ile albumów wyswietlac
         sorted_albums_by_avr = album_collector.get_albums(reverse_input=True, number_of_albums_to_show=num_albums)
 
-        #TODO : Sortowanie po gatunkach - wypisywanie tylko top , z danego gatunku
-        # DONE (?)
-        #TODO: mozliwosc wpisania nazwy artysty i wypisanie wszytskich topowych albumów tego wybranego artysty
         #wyswietlanie rekordów
         for idx, album in enumerate(sorted_albums_by_avr):
             display_album(album, idx, num_albums)
@@ -131,6 +100,9 @@ def run():
         genre_input = st.selectbox("Select a genre:", available_genres)
 
         top_artists = get_top_artists(limit=num_artists, genre=genre_input)
+
+        if top_artists == None:
+            return st.header("There is no such an artist ")
 
         for idx, artist in enumerate(top_artists):
             with st.expander(label=f"Top: {idx + 1}", expanded=True):
