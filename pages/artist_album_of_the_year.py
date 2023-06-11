@@ -67,6 +67,35 @@ def display_album(album, idx, total_albums):
             st.write(f"Duration : {album.duration_ms / 100}")
         with col3:
             charts.spotifyAlbumPicture(album.ars_name)
+            
+            
+# def get_available_genres():
+#     genres = sp.recommendation_genre_seeds()['genres']
+#     return genres
+
+# def get_top_artists(limit=None, genre=None):
+#     if genre:
+#         query = f"year:2022 genre:{genre}"
+#     else:
+#         query = "year:2022"
+
+#     results = sp.search(q=query, type='artist', limit=limit)
+#     artists = results['artists']['items']
+#     top_artists = []
+#     for artist in artists:
+#         ars_name = artist['name']
+#         genres = artist['genres']
+#         popularity = artist['popularity']
+#         image_url = artist['images'][0]['url'] if artist['images'] else None
+
+#         top_artists.append({
+#             'ars_name': ars_name,
+#             'genres': genres,
+#             'popularity': popularity,
+#             'image_url': image_url
+#         })
+#     top_artists = sorted(top_artists, key=lambda x: x['popularity'], reverse=True)
+#     return top_artists
 
 def run():
     data = load_data("csvs/Top5000_album_rating.csv")
