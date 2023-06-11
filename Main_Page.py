@@ -19,24 +19,30 @@ def load_data(path: str) -> pd.DataFrame:
         print(f"\n[FAILED] path '{path}' doesn't exist!")
 
 
-def home_page(data):
+def home_page(data,data1):
     # Using object notation
+    #
+    # #Testowy Wykres
+    # st.title("Home Page")
+    # chart_data = data1[["tracks recorded", "feat Streams","artist"]]
+    # #Testowy Wykres
+    # #data = go.Surface(z=data1[["tracks recorded", "feat Streams", "artist"]]),
+    # fig1 = go.Figure(
+    #     data=go.Surface(z=data1[["feat Streams","lead Streams"]],
+    #                     x=data1[["songs over 1m","songs over 10m"]]),
+    #     layout=go.Layout(
+    #         title="+100 do zajebistosci",
+    #         width=1000,
+    #         height=800,
+    #
+    #
+    #     ))
+    #
+    #
+    # st.plotly_chart(fig1, theme=None)
+    #
+    # #-------------#
 
-    #Testowy Wykres
-    st.title("Home Page")
-    chart_data = data[["bpm", "nrgy"]]
-    #Testowy Wykres
-    fig1 = go.Figure(
-        data=go.Surface(z=data[["bpm", "nrgy"]]),
-        layout=go.Layout(
-            title="+100 do zajebistosci",
-            width=1000,
-            height=800,
-        ))
-    st.plotly_chart(fig1, theme=None)
-
-    #-------------#
-    st.title("Gotowe Wykresy")
 
     # CHART depicting the relationship between 'top genre'  and 'Popularity'
     with st.expander(label="", expanded=True):
@@ -109,7 +115,9 @@ def main():
     image = Image.open("spotifyLogo.png")
     st.sidebar.image(image, width=50)
     data = load_data("csvs/spotify_2010_2019_data.csv")
-    home_page(data)
+    data1 = load_data("csvs/artists_data.csv")
+    home_page(data,data1)
+
 
 
 main()

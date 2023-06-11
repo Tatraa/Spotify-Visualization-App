@@ -125,7 +125,9 @@ def chart_bpm_year(data,type_of_chart="bar"):
                               x='year',
                               y='bpm',
                               title='Chart Showing Average Tempo of Songs by Year',
-                              color='bpm'
+                              color='bpm',
+                              log_y=True
+
                               )
 
     elif type_of_chart == "line":
