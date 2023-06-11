@@ -114,10 +114,8 @@ def run():
         # reverse_input -  True od najwiekszych ocen False - od najmniejszych ocen, number_of_albums_to_show - ile albumów wyswietlac
         sorted_albums_by_avr = album_collector.get_albums(reverse_input=True, number_of_albums_to_show=num_albums)
 
-        #TODO : Sortowanie po gatunkach - wypisywanie tylko top , z danego gatunku
-        # DONE (?)
-        #TODO: mozliwosc wpisania nazwy artysty i wypisanie wszytskich topowych albumów tego wybranego artysty
-        #wyswietlanie rekordów
+        # TODO: mozliwosc wpisania nazwy artysty i wypisanie wszytskich topowych albumów tego wybranego artysty
+        # wyswietlanie rekordów
         for idx, album in enumerate(sorted_albums_by_avr):
             display_album(album, idx, num_albums)
 
@@ -134,12 +132,13 @@ def run():
 
         for idx, artist in enumerate(top_artists):
             with st.expander(label=f"Top: {idx + 1}", expanded=True):
-                st.write(f"Artist: {artist['ars_name']}")
-                st.write(f"Genres: {artist['genres']}")
-                st.write(f"Popularity: {artist['popularity']}")
-                if artist['image_url']:
-                    st.image(artist['image_url'])
-                st.write("--------------")
-
+                col1, col2 = st.columns([2, 3])
+                with col1:
+                    if artist['image_url']:
+                        st.image(artist['image_url'])
+                with col2:
+                    st.header(f"Artist: {artist['ars_name']}")
+                    st.write(f"Genres: {artist['genres']}")
+                    st.write(f"Popularity: {artist['popularity']}")
 
 run()
